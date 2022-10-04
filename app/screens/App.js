@@ -12,7 +12,7 @@ function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="PortfolioManager" component={HomeScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
