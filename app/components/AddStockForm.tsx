@@ -12,7 +12,9 @@ let portfolio = new Portfolio("Test");
 
 export function AddStockForm() {
 
-    const ListItem = ({ item, onPress, backgroundColor, textColor }) => (
+    const ListItem = ({ item, onPress, backgroundColor, textColor}: 
+        { item: String, onPress: () => void, backgroundColor: String, textColor: String }) => (
+        
         <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
             <Text style={[styles.title, textColor]}>{item.ticker}</Text>
         </TouchableOpacity>
@@ -28,15 +30,14 @@ export function AddStockForm() {
     });
 
     const onSubmit = (data: { ticker: string; entryPrice: number | undefined; positionSize: number | undefined; }) => {
-        const stock = new Stock(data.ticker, data.entryPrice, data.positionSize)
-        stock.id = uuid();
+        const stock = new Stock(uuid(), data.ticker, data.entryPrice, data.positionSize)
         portfolio.addStockToPortfolio(stock)
         console.log(portfolio);
     }
     // Setting up list
-    const [selectedId, setSelectedId] = useState(null);
+    const [selectedId, setSelectedId] = useState<string | null>(null);
 
-    const renderItem = ({ item }) => {
+    const renderItem = (item: Stock) => {
         const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
         const color = item.id === selectedId ? 'white' : 'black';
 
