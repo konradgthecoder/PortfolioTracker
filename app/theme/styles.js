@@ -25,4 +25,13 @@ export const styles = StyleSheet.create({
       padding: 10,
       borderRadius: 4,
     },
+    item: {
+      backgroundColor: '#f9c2ff',
+      padding: 20,
+      marginVertical: 8,
+      marginHorizontal: 16,
+    },
+    title: {
+      fontSize: 32,
+    },
   });

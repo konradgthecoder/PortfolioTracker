@@ -1,9 +1,4 @@
-/**
- * The Portfolio class is defined as a singleton, and includes all methods for storing and manipulating
- * individual Stocks in a user's Portfolio.
- */
 export class Stock {
-    id: string;
     ticker: string;
     entryPrice: number;
     size: number;
@@ -16,6 +11,9 @@ export class Stock {
     }
 }
 
+/**
+ * The Portfolio class is responsible for the management of Stocks in a User's Portfolio.
+ */
 export class Portfolio {
     private portfolioName = "";
     private portfolioStocks: Stock[] = [];
@@ -33,7 +31,7 @@ export class Portfolio {
     }
 
     public addStockToPortfolio(stock: Stock) {
-        this.portfolioStocks.push(stock)
+        this.portfolioStocks.push(stock);
     }
 
     public removeStockFromPortfolio(stock: Stock) {
@@ -42,6 +40,38 @@ export class Portfolio {
             this.portfolioStocks.splice(index, 1);
         }
     }
+}
 
+/**
+ * The PortfolioManager class is defined as a singleton, and includes all methods for storing and manipulating
+ * individual Portfolios in a User's Account.
+ */
+export class PortfolioManager {
+    private static instance: PortfolioManager;
+    private accountPortfolios: Portfolio[] = [];
 
+    private constructor() { }
+
+    public static getInstance(): PortfolioManager {
+        if (!PortfolioManager.instance) {
+            PortfolioManager.instance = new PortfolioManager();
+        }
+
+        return PortfolioManager.instance;
+    }
+
+    public getAccountPortfolios() {
+        return this.accountPortfolios;
+    }
+
+    public addPortfolioToAccount(portfolio: Portfolio) {
+        this.accountPortfolios.push(portfolio);
+    }
+
+    public removePortfolioFromAccount(portfolio: Portfolio) {
+        const index = this.accountPortfolios.indexOf(portfolio);
+        if (index > -1) {
+            this.accountPortfolios.splice(index, 1);
+        }
+    }
 }
