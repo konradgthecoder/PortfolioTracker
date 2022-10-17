@@ -1,9 +1,11 @@
-import React from "react";
-import { SafeAreaView, View, FlatList, Text, ListRenderItem } from "react-native";
-import { Stock } from "../models/Portfolio";
+import React, { useEffect, useState } from "react";
+import { View, FlatList, Text, ListRenderItem } from "react-native";
+import { PortfolioManager, Stock } from "../models/Portfolio";
 import { styles } from "../theme/styles";
 
-export function StocksFlatList({ props }: { props: [Stock] }) {
+export function StocksFlatList() {
+    const [test, setTest] = useState("test");
+
     const ListItem = (data: {title: String}) => (
         <View style={styles.item}>
             <Text style={styles.title}>{data.title}</Text>
@@ -12,11 +14,15 @@ export function StocksFlatList({ props }: { props: [Stock] }) {
 
     const renderItem: ListRenderItem<Stock> = ({ item }) => (
         <ListItem title={item.ticker} />
-    );
+    );    
+
+    useEffect(() => {
+    }, [PortfolioManager.getInstance().getDefaultPortfolio().getPortfolioStocks()])
+    
 
     return (
         <FlatList
-            data={props}
+            data={PortfolioManager.getInstance().getDefaultPortfolio().getPortfolioStocks()}
             renderItem={renderItem}
             keyExtractor={item => item.ticker}
         />

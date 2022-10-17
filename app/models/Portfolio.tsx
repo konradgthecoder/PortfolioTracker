@@ -60,7 +60,11 @@ export class PortfolioManager {
         return PortfolioManager.instance;
     }
 
-    public getAccountPortfolios() {
+    public getDefaultPortfolio(): Portfolio {
+        return this.accountPortfolios[0];
+    }
+
+    public getAccountPortfolios(): Portfolio[] {
         return this.accountPortfolios;
     }
 

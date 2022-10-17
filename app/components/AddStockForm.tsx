@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, TextInput, Button } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { styles } from '../theme/styles';
 
 // Models
-import { Portfolio, Stock } from "../models/Portfolio";
-
-let portfolio = new Portfolio("Test");
+import { Portfolio, PortfolioManager, Stock } from "../models/Portfolio";
 
 export function AddStockForm() {
 
@@ -20,9 +18,8 @@ export function AddStockForm() {
     });
 
     const onSubmit = (data: { ticker: string; entryPrice: string; positionSize: string; }) => {
-        const stock = new Stock(data.ticker, +data.entryPrice, +data.positionSize)
-        portfolio.addStockToPortfolio(stock)
-        console.log(portfolio);
+        const stock = new Stock(data.ticker, +data.entryPrice, +data.positionSize);
+        PortfolioManager.getInstance().getDefaultPortfolio().addStockToPortfolio(stock);
     }
     
     return (
