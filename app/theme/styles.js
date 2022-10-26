@@ -22,4 +22,7 @@ export const styles = StyleSheet.create({
     title: {
       fontSize: 32,
     },
+    secondaryLabel: {
+      color: 'grey',
+    },
   });

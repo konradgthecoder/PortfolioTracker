@@ -1,5 +1,7 @@
 import { Alert } from "react-native";
 import { Stock } from "./Stock";
+// Get Stocks collection for DefaultPortfolio
+import { currentPortfolioStocks } from "../apis/Firestore";
 
 /**
  * The Portfolio class is responsible for the management of Stocks in a User's Portfolio.
@@ -20,14 +22,34 @@ export class Portfolio {
         return this.portfolioName;
     }
 
-    public addStockToPortfolio(stock: Stock) {
-        if (!this.portfolioStocks.find(s => s.ticker === stock.ticker)) {
-            this.portfolioStocks.push(stock);
+    public async addStockToPortfolio(stock: Stock) {
+        // First check if the ticker exists in Firebase. If not, add the input stock to DB.
+        const tickerDoesExist = (await currentPortfolioStocks.doc(stock.ticker).get()).exists;
+
+        if (!tickerDoesExist) {
+            try {
+                console.log("Trying to add stock...");
+                currentPortfolioStocks
+                .doc(stock.ticker)
+                .set({
+                    ticker: stock.ticker,
+                    entryPrice: stock.entryPrice,
+                    size: stock.size
+                })
+                .then(() => {
+                    console.log("Stock added!");
+                });
+            } catch (error) {
+                Alert.alert(
+                    "Ticker not added",
+                    `Failed to add ticker: ${stock.ticker}`
+                )
+            }
         }
         else {
             Alert.alert(
                 "Ticker not added",
-                "This ticker already exists in your Portfolio!"
+                `This ticker: ${stock.ticker} already exists in your Portfolio!`
             );
         }
     }

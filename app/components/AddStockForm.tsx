@@ -21,6 +21,7 @@ export function AddStockForm({ handleListChange }: { handleListChange: Function}
     const onSubmit = (data: { ticker: string; entryPrice: string; positionSize: string; }) => {
         const stock = new Stock(data.ticker, +data.entryPrice, +data.positionSize);
         PortfolioManager.getInstance().getDefaultPortfolio().addStockToPortfolio(stock);
+        console.log(`Submitted ${data.ticker}`);
         handleListChange();
     }
     
